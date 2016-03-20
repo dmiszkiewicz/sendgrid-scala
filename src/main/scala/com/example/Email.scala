@@ -4,7 +4,7 @@ import java.io.InputStream
 
 import com.sendgrid.smtpapi.SMTPAPI
 
-case class Email(smtpapi: SMTPAPI = new SMTPAPI(),
+case class Email(smtpAPI: SMTPAPI = new SMTPAPI(),
                  from: Option[String] = None,
                  fromName: Option[String] = None,
                  replyTo: Option[String] = None,
@@ -13,7 +13,7 @@ case class Email(smtpapi: SMTPAPI = new SMTPAPI(),
                  html: Option[String] = None,
                  bcc: Seq[String] = Seq(),
                  to: Seq[String] = Seq(),
-                 toname: Seq[String] = Seq(),
+                 toName: Seq[String] = Seq(),
                  cc: Seq[String] = Seq(),
                  attachments: Map[String, InputStream] = Map(),
                  contents: Map[String, String] = Map(),

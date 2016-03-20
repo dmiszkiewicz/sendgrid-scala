@@ -31,7 +31,7 @@ class SendGrid(credentials: SendGridCredentials,
       }
     }
     email.to.foreach(to => builder.addTextBody(TO, to, ContentType.create(TEXT_PLAIN, UTF_8)))
-    email.toname.foreach(toName => builder.addTextBody(TONAME, toName, ContentType.create(TEXT_PLAIN, UTF_8)))
+    email.toName.foreach(toName => builder.addTextBody(TONAME, toName, ContentType.create(TEXT_PLAIN, UTF_8)))
     email.cc.foreach(cc => builder.addTextBody(CC, cc, ContentType.create(TEXT_PLAIN, UTF_8)))
     email.bcc.foreach(bcc => builder.addTextBody(BCC, bcc, ContentType.create(TEXT_PLAIN, UTF_8)))
     email.attachments.foreach { attachment =>
@@ -60,7 +60,7 @@ class SendGrid(credentials: SendGridCredentials,
     email.text.map { text =>
       builder.addTextBody(TEXT, text, ContentType.create(TEXT_PLAIN, UTF_8))
     }
-    val tmpString: String = email.smtpapi.jsonString()
+    val tmpString: String = email.smtpAPI.jsonString()
     if (tmpString != "{}")
       builder.addTextBody(XSMTPAPI, tmpString, ContentType.create(TEXT_PLAIN, UTF_8))
     builder.build

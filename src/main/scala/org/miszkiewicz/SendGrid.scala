@@ -1,6 +1,6 @@
-package com.example
+package org.miszkiewicz
 
-import com.example.SendGrid._
+import org.miszkiewicz.SendGrid._
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.ContentType
 import org.apache.http.entity.mime.MultipartEntityBuilder

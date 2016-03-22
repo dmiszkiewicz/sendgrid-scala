@@ -1,4 +1,4 @@
-package com.example
+package org.miszkiewicz
 
 import java.io.InputStream
 

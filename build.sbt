@@ -1,6 +1,8 @@
 name := """sendgrid-scala"""
 
-version := "0.1"
+organization := "org.miszkiewicz"
+
+version := "0.1-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 

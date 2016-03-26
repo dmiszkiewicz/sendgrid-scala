@@ -8,6 +8,7 @@ import org.apache.http.impl.client.{CloseableHttpClient, HttpClientBuilder}
 import org.apache.http.util.EntityUtils
 import org.apache.http.{HttpEntity, HttpResponse}
 import org.json.JSONObject
+import org.miszkiewicz.model._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -20,7 +21,7 @@ class SendGrid(credentials: SendGridCredentials,
   def buildBody(email: Email): HttpEntity = {
     val builder: MultipartEntityBuilder = MultipartEntityBuilder.create
     credentials match {
-      case UserPasswordCredentials(user, password) =>
+      case UserCredentials(user, password) =>
         builder.addTextBody(APIUSER, user)
         builder.addTextBody(APIKEY, password)
       case ak: ApiKey =>
@@ -70,7 +71,7 @@ class SendGrid(credentials: SendGridCredentials,
     val httpPost: HttpPost = new HttpPost(url + endpoint)
     httpPost.setEntity(buildBody(email))
     credentials match {
-      case UserPasswordCredentials(user, password) =>
+      case UserCredentials(user, password) =>
       case ApiKey(apiKey) =>
         httpPost.setHeader(AUTHORIZATION, "Bearer " + apiKey)
 

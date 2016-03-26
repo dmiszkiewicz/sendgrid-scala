@@ -1,4 +1,4 @@
-package org.miszkiewicz
+package org.miszkiewicz.model
 
 import java.io.InputStream
 

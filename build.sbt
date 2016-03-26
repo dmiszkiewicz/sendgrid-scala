@@ -8,6 +8,12 @@ scalaVersion := "2.11.8"
 
 libraryDependencies += "com.sendgrid" % "sendgrid-java" % "2.2.2"
 
+libraryDependencies += "com.typesafe.akka" %% "akka-http-spray-json-experimental" % "2.4.2"
+
+libraryDependencies += "org.specs2" %% "specs2-core" % "3.7.2" % Test
+
+scalacOptions in Test ++= Seq("-Yrangepos")
+
 publishMavenStyle := true
 
 pomIncludeRepository := { _ => false }

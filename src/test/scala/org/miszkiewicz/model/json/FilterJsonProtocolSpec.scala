@@ -11,7 +11,7 @@ class FilterJsonProtocolSpec extends Specification {
   "FilterJsonProtocol" should {
     "deserialize filter to json" in {
       val filter: Filter = BCC(true, "you@example.com")
-      filter.toJson shouldEqual "{\"bcc\":{\"settings\":{\"enable\":1,\"email\":\"you@example.com\"}}}".parseJson
+      filter.toJson shouldEqual "{\"settings\":{\"enable\":1,\"email\":\"you@example.com\"}}".parseJson
     }
   }
 }

@@ -11,7 +11,7 @@ class SendTimeJsonProtocolSpec extends Specification {
   "SendTimeJsonProtocol" should {
     "deserialize SendTime to json" in {
       val sendTime = SendAt(1)
-      sendTime.toJson shouldEqual "{\"send_at\":1}".parseJson
+      sendTime.toJson shouldEqual JsNumber(1)
     }
   }
 }

@@ -3,9 +3,11 @@ package org.miszkiewicz.model.json
 import org.miszkiewicz.model.smtpapi._
 import spray.json._
 
+import scala.collection.mutable
 import scala.language.implicitConversions
 
 object FilterJsonProtocol extends DefaultJsonProtocol {
+
   implicit def bool2int(b: Boolean): Int = if (b) 1 else 0
 
   implicit object BCCJsonFormat extends RootJsonFormat[BCC] {
@@ -60,11 +62,12 @@ object FilterJsonProtocol extends DefaultJsonProtocol {
   }
 
   implicit object FooterJsonFormat extends RootJsonFormat[Footer] {
-    def write(c: Footer) = JsObject(
-      "enable" -> JsNumber(c.enable),
-      "text/html" -> JsString(c.textHtml),
-      "text/plane" -> JsString(c.textPlain)
-    )
+    def write(c: Footer) = {
+      val fields: mutable.MutableList[JsField] = mutable.MutableList("enable" -> JsNumber(c.enable))
+      c.textHtml.foreach(textHtml => fields += ("text/html" -> JsString(textHtml)))
+      c.textPlain.foreach(textPlain => fields += ("text/plain" -> JsString(textPlain)))
+      JsObject(fields: _*)
+    }
 
     def read(value: JsValue) = ???
   }
@@ -73,7 +76,7 @@ object FilterJsonProtocol extends DefaultJsonProtocol {
     def write(c: SubscriptionTrack) = JsObject(
       "enable" -> JsNumber(c.enable),
       "text/html" -> JsString(c.textHtml),
-      "text/plane" -> JsString(c.textPlain),
+      "text/plain" -> JsString(c.textPlain),
       "replace" -> JsString(c.replace)
     )
 
@@ -122,8 +125,7 @@ object FilterJsonProtocol extends DefaultJsonProtocol {
   }
 
   implicit object FilterJsonFormat extends RootJsonFormat[Filter] {
-    def write(c: Filter) = JsObject(
-      c.name -> JsObject("settings" -> (c match {
+    def write(c: Filter) = JsObject("settings" -> (c match {
         case f: BCC => f.toJson
         case f: BypassListManagement => f.toJson
         case f: ClickTrack => f.toJson
@@ -137,7 +139,6 @@ object FilterJsonProtocol extends DefaultJsonProtocol {
         case f: Templates => f.toJson
         case f: Footer => f.toJson
       }))
-    )
 
     def read(value: JsValue) = ???
   }

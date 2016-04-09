@@ -15,17 +15,13 @@ object SendTimeJsonProtocol extends DefaultJsonProtocol {
   }
 
   implicit object SendAtJsonFormat extends RootJsonFormat[SendAt] {
-    def write(c: SendAt) = JsObject(
-      "send_at" -> JsNumber(c.timestamp)
-    )
+    def write(c: SendAt) = JsNumber(c.timestamp)
 
     def read(value: JsValue) = ???
   }
 
   implicit object SendEachAtJsonFormat extends RootJsonFormat[SendEachAt] {
-    def write(c: SendEachAt) = JsObject(
-      "send_each_at" -> c.timestamps.toJson
-    )
+    def write(c: SendEachAt) = c.timestamps.toJson
 
     def read(value: JsValue) = ???
   }

@@ -2,9 +2,9 @@ package org.miszkiewicz.model
 
 import java.io.InputStream
 
-import com.sendgrid.smtpapi.SMTPAPI
+import org.miszkiewicz.model.smtpapi.SmtpApi
 
-case class Email(smtpAPI: SMTPAPI = new SMTPAPI(),
+case class Email(smtpAPI: Option[SmtpApi] = None,
                  from: Option[String] = None,
                  fromName: Option[String] = None,
                  replyTo: Option[String] = None,

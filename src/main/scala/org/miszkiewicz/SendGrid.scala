@@ -1,5 +1,6 @@
 package org.miszkiewicz
 
+import org.apache.commons.lang3.StringEscapeUtils
 import org.miszkiewicz.SendGrid._
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.ContentType
@@ -7,8 +8,8 @@ import org.apache.http.entity.mime.MultipartEntityBuilder
 import org.apache.http.impl.client.{CloseableHttpClient, HttpClientBuilder}
 import org.apache.http.util.EntityUtils
 import org.apache.http.{HttpEntity, HttpResponse}
-import org.json.JSONObject
 import org.miszkiewicz.model._
+import spray.json._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -17,6 +18,8 @@ class SendGrid(credentials: SendGridCredentials,
                url: String = DEFULTSENDGRIDURL,
                endpoint: String = DEFULTSENDGRIDENDPOINT,
                client: CloseableHttpClient = HttpClientBuilder.create.setUserAgent(USER_AGENT).build) {
+
+  import org.miszkiewicz.model.json.SmtpApiJsonProtocol._
 
   def buildBody(email: Email): HttpEntity = {
     val builder: MultipartEntityBuilder = MultipartEntityBuilder.create
@@ -42,7 +45,7 @@ class SendGrid(credentials: SendGridCredentials,
       builder.addTextBody(String.format(CONTENTS, content._1), content._2)
     }
     if (email.headers.nonEmpty)
-      builder.addTextBody(HEADERS, new JSONObject(email.headers).toString, ContentType.create(TEXT_PLAIN, UTF_8))
+      builder.addTextBody(HEADERS, email.headers.toJson.compactPrint, ContentType.create(TEXT_PLAIN, UTF_8))
     email.from.map { from =>
       builder.addTextBody(FROM, from, ContentType.create(TEXT_PLAIN, UTF_8))
     }
@@ -61,9 +64,10 @@ class SendGrid(credentials: SendGridCredentials,
     email.text.map { text =>
       builder.addTextBody(TEXT, text, ContentType.create(TEXT_PLAIN, UTF_8))
     }
-    val tmpString: String = email.smtpAPI.jsonString()
-    if (tmpString != "{}")
-      builder.addTextBody(XSMTPAPI, tmpString, ContentType.create(TEXT_PLAIN, UTF_8))
+    email.smtpAPI.foreach{smptApi =>
+      val smptApiJson = smptApi.toJson.compactPrint
+      val escapedJson = StringEscapeUtils.escapeJava(smptApiJson)
+      builder.addTextBody(XSMTPAPI, escapedJson, ContentType.create(TEXT_PLAIN, UTF_8))}
     builder.build
   }
 

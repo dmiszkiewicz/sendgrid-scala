@@ -30,7 +30,7 @@ case class OpenTrack(enable: Boolean, replace: String) extends Filter {
 }
 
 //case class footer(enable: Boolean, `text/html`: String, `text/plain`: String) extends Filter {
-case class Footer(enable: Boolean, textHtml: String, textPlain: String) extends Filter {
+case class Footer(enable: Boolean, textHtml: Option[String] = None, textPlain: Option[String] = None) extends Filter {
   override val name: String = "footer"
 }
 

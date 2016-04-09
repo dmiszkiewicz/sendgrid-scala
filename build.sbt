@@ -6,7 +6,18 @@ version := "0.1-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 
-libraryDependencies += "com.sendgrid" % "sendgrid-java" % "2.2.2"
+val httpcomponentsVersion = "4.5.2"
+
+libraryDependencies += "org.apache.httpcomponents" % "httpclient" % httpcomponentsVersion
+libraryDependencies += "org.apache.httpcomponents" % "httpmime" % httpcomponentsVersion
+
+libraryDependencies += "com.typesafe.akka" %% "akka-http-spray-json-experimental" % "2.4.2"
+
+libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.4"
+
+libraryDependencies += "org.specs2" %% "specs2-core" % "3.7.2" % Test
+
+scalacOptions in Test ++= Seq("-Yrangepos")
 
 publishMavenStyle := true
 

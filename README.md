@@ -14,7 +14,7 @@ If you use SBT, you can include sendgrid-scala in your project with
 
 ```scala
 resolvers += "SonaType" at "https://oss.sonatype.org/content/groups/public"
-libraryDependencies += "org.miszkiewicz" %% "sendgrid-scala" % "0.1-SNAPSHOT"
+libraryDependencies += "org.miszkiewicz" %% "sendgrid-scala" % "0.2-SNAPSHOT"
 ```
 
 Example usage

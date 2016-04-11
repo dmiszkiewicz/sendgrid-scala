@@ -112,6 +112,11 @@ object SendGrid {
   val DEFULTSENDGRIDURL = "https://api.sendgrid.com"
   val DEFULTSENDGRIDENDPOINT = "/api/mail.send.json"
 
+  /**
+    * Copied from sendgrid-java project
+    * @param input
+    * @return
+    */
   private def escapeUnicode(input: String): String = {
     val sb: StringBuilder = new StringBuilder
     val codePointArray = input.map(c => c.toInt)

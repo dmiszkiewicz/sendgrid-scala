@@ -2,7 +2,7 @@ name := """sendgrid-scala"""
 
 organization := "org.miszkiewicz"
 
-version := "0.1-SNAPSHOT"
+version := "0.2-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 
@@ -12,8 +12,6 @@ libraryDependencies += "org.apache.httpcomponents" % "httpclient" % httpcomponen
 libraryDependencies += "org.apache.httpcomponents" % "httpmime" % httpcomponentsVersion
 
 libraryDependencies += "com.typesafe.akka" %% "akka-http-spray-json-experimental" % "2.4.2"
-
-libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.4"
 
 libraryDependencies += "org.specs2" %% "specs2-core" % "3.7.2" % Test
 

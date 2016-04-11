@@ -52,7 +52,7 @@ class SmtpApiJsonProtocolSpec extends Specification {
   "FilterJsonProtocol" should {
     "deserialize filter to json" in {
       val smtpApi = SmtpApi(
-        recipient = Seq("ben@sendgrid.com", "joe@sendgrid.com"),
+        recipients = Seq("ben@sendgrid.com", "joe@sendgrid.com"),
         substitutions = Map("%name%" -> Seq("Ben", "Joe"), "%role%" -> Seq("%sellerSection%", "%buyerSection%")),
         sections = Map("%sellerSection%" -> "Seller information for: %name%",
           "%buyerSection%" -> "Buyer information for: %name%"),

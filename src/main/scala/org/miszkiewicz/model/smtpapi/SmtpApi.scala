@@ -1,7 +1,7 @@
 package org.miszkiewicz.model.smtpapi
 
 //TODO batch_id
-case class SmtpApi(recipient: Seq[String] = Seq(), // optionally including the display name. to
+case class SmtpApi(recipients: Seq[String] = Seq(), // optionally including the display name. to
                    uniqueArguments: Map[String, String] = Map(), //unique_args
                    categories: Seq[String] = Seq(), //up to 10 category
                    sections: Map[String, String] = Map(), //section

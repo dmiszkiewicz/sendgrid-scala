@@ -1,6 +1,5 @@
 package org.miszkiewicz
 
-import org.apache.commons.lang3.StringEscapeUtils
 import org.miszkiewicz.SendGrid._
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.entity.ContentType
@@ -66,8 +65,7 @@ class SendGrid(credentials: SendGridCredentials,
     }
     email.smtpAPI.foreach{smptApi =>
       val smptApiJson = smptApi.toJson.compactPrint
-      val escapedJson = StringEscapeUtils.escapeJava(smptApiJson)
-      builder.addTextBody(XSMTPAPI, escapedJson, ContentType.create(TEXT_PLAIN, UTF_8))}
+      builder.addTextBody(XSMTPAPI, escapeUnicode(smptApiJson), ContentType.create(TEXT_PLAIN, UTF_8))}
     builder.build
   }
 
@@ -113,4 +111,23 @@ object SendGrid {
   val APIKEY = "api_key"
   val DEFULTSENDGRIDURL = "https://api.sendgrid.com"
   val DEFULTSENDGRIDENDPOINT = "/api/mail.send.json"
+
+  private def escapeUnicode(input: String): String = {
+    val sb: StringBuilder = new StringBuilder
+    val codePointArray = input.map(c => c.toInt)
+    codePointArray.foreach{ i =>
+      if (i > 65535) {
+        val hi: Int = (i - 0x10000) / 0x400 + 0xD800
+        val lo: Int = (i - 0x10000) % 0x400 + 0xDC00
+        sb.append("\\u%04x\\u%04x".format(hi, lo))
+      }
+      else if (i > 127) {
+        sb.append("\\u%04x".format(i))
+      }
+      else {
+        sb.append("%c".format(i))
+      }
+    }
+    sb.toString
+  }
 }

@@ -40,7 +40,7 @@ sendGrid.send(sendGridEmail)
 Issues and Pull Requests
 -------
 
-Feel free to sned Pull Requests and ask me anything, I can help you integrate this library in your code.
+Feel free to send Pull Requests and ask me anything, I can help you integrate this library in your code.
 
 license
 -------
